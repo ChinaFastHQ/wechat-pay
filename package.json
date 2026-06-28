@@ -1,0 +1,23 @@
+{
+  "name": "chinafast-wechat-pay-monorepo",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint . --deny-warnings",
+    "test": "pnpm --filter \"./packages/**\" build && pnpm -r test",
+    "typecheck": "pnpm --filter \"./packages/**\" build && pnpm -r typecheck",
+    "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "oxfmt": "0.56.0",
+    "oxlint": "1.71.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.2"
+  },
+  "packageManager": "pnpm@10.12.1"
+}

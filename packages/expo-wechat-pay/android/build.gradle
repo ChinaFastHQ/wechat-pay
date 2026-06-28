@@ -1,0 +1,15 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.wechatpay'
+version = '0.1.0'
+
+android {
+  namespace 'expo.modules.wechatpay'
+  defaultConfig { versionCode 1; versionName '0.1.0' }
+  lintOptions { abortOnError false }
+}
+
+dependencies { api 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.34' }

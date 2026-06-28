@@ -1,0 +1,68 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #13251c;
+  background: #edf4f0;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+main {
+  width: min(520px, calc(100% - 48px));
+  padding: 40px;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 20px 60px #173b2820;
+}
+.eyebrow {
+  color: #08783e;
+  font-weight: 700;
+  font-size: 13px;
+}
+h1 {
+  font-size: 38px;
+  line-height: 1.05;
+  margin: 12px 0;
+}
+p {
+  color: #506158;
+  line-height: 1.6;
+}
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 20px;
+  background: #07c160;
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.55;
+}
+section {
+  margin: 24px 0;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+section img {
+  width: 260px;
+}
+.status {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f1f5f3;
+}
+.paid {
+  color: #08783e;
+}
+.error {
+  color: #b42318;
+}
+small {
+  color: #6b7770;
+}

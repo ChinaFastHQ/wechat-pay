@@ -1,0 +1,42 @@
+:root {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  color: #16281f;
+  background: #f5f1e8;
+}
+body {
+  margin: 0;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+main {
+  width: min(560px, calc(100% - 48px));
+}
+.tag {
+  color: #078344;
+}
+h1 {
+  font-size: clamp(36px, 8vw, 64px);
+  line-height: 1;
+}
+button {
+  padding: 14px 18px;
+  border: 2px solid #16281f;
+  background: #b7f5cf;
+  font: inherit;
+  box-shadow: 5px 5px 0 #16281f;
+}
+#qr {
+  margin-top: 28px;
+}
+#qr img {
+  width: 260px;
+  background: white;
+  padding: 10px;
+}
+pre {
+  overflow: auto;
+  padding: 18px;
+  background: #16281f;
+  color: #c9f9dc;
+}
