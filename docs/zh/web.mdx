@@ -1,0 +1,43 @@
+---
+title: Web
+description: 浏览器中的 H5、JSAPI 和 Native 二维码支付。
+---
+
+# Web
+
+`@chinafast/web-wechat-pay` 会在微信内选择 JSAPI，在其他移动浏览器选择 H5，在桌面浏览器选择 Native 二维码。
+
+## 创建支付
+
+```ts
+import { createWebWeChatPay } from "@chinafast/web-wechat-pay";
+
+const payments = createWebWeChatPay({ apiBaseUrl: "https://api.example.com" });
+const result = await payments.pay({ productId: "coffee", openId });
+```
+
+Native 订单的 `result.qr` 是可直接用于图片 `src` 的 data URL。H5 和 JSAPI 不返回二维码。
+
+## 监听权威状态
+
+```ts
+const controller = payments.watch(result.orderId, (status) => {
+  if (status.status === "paid") showConfirmation();
+});
+
+controller.stop();
+```
+
+订单进入 paid、closed 或 failed 状态后轮询会自动停止。
+
+## React
+
+```tsx
+import { useWeChatPay } from "@chinafast/web-wechat-pay/react";
+
+const { pay, loading, result, error, qr, status } = useWeChatPay(payments);
+```
+
+::: warning
+浏览器回调只表示客户端拉起结果，并非支付凭证。必须根据服务端权威状态交付商品。
+:::

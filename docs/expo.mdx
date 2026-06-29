@@ -1,0 +1,56 @@
+---
+title: Expo
+description: Native App Pay for Expo development and production builds.
+---
+
+# Expo
+
+`@chinafast/expo-wechat-pay` provides native WeChat App Pay, an Expo config plugin, and optional React bindings.
+
+## Configure the native project
+
+```ts
+export default {
+  expo: {
+    plugins: [
+      [
+        "@chinafast/expo-wechat-pay/plugin",
+        {
+          appId: process.env.EXPO_PUBLIC_WECHAT_APP_ID,
+          universalLink: "https://example.com/app/",
+        },
+      ],
+    ],
+  },
+};
+```
+
+Rebuild the native application after adding or changing the plugin.
+
+## Create a payment
+
+```ts
+import { createExpoWeChatPay } from "@chinafast/expo-wechat-pay";
+
+const payments = createExpoWeChatPay({
+  appId: process.env.EXPO_PUBLIC_WECHAT_APP_ID!,
+  universalLink: "https://example.com/app/",
+  apiBaseUrl: "https://api.example.com",
+});
+
+const result = await payments.pay({ productId: "coffee" });
+```
+
+## React
+
+```tsx
+import { useWeChatPay } from "@chinafast/expo-wechat-pay/react";
+
+const { pay, loading, result, error, status } = useWeChatPay(payments);
+```
+
+`result.status` describes the native SDK callback. `status` comes from polling your backend and is the value that should drive user-facing confirmation.
+
+::: warning Expo Go
+Expo Go cannot load the WeChat native SDK. Use a development build or standalone application.
+:::

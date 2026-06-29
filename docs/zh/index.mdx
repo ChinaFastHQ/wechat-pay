@@ -1,0 +1,32 @@
+---
+title: 微信支付
+description: 面向 Web、Expo 和 Node.js 的一次性微信支付。
+---
+
+# 微信支付
+
+一个专注于 App、H5、JSAPI 和 Native 二维码一次性支付的 TypeScript 工作区。
+
+::: tip 安全的运行时边界
+商户密钥不会进入客户端软件包。订单创建、签名、回调验签和履约始终在可信后端完成。
+:::
+
+## 软件包
+
+| 软件包 | 职责 |
+| --- | --- |
+| `@chinafast/core-wechat-pay` | 共享协议、支付渠道策略、错误和后端 HTTP 客户端 |
+| `@chinafast/web-wechat-pay` | H5、公众号 JSAPI、桌面 Native 二维码和 React |
+| `@chinafast/expo-wechat-pay` | 原生微信 App 支付、Expo 配置插件和 React |
+| `@chinafast/server-wechat-pay` | API v3 签名、订单、查询、关闭、退款和回调验签 |
+
+## 支持的渠道
+
+| 运行环境 | 支付渠道 |
+| --- | --- |
+| 微信内浏览器 | JSAPI |
+| 其他移动浏览器 | H5 |
+| 桌面浏览器 | Native 二维码 |
+| Expo 开发或生产构建 | App 支付 |
+
+先阅读[快速开始](/zh/wechat-pay/getting-started)，然后选择 [Web](/zh/wechat-pay/web) 或 [Expo](/zh/wechat-pay/expo)。

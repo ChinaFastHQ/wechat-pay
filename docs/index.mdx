@@ -1,0 +1,32 @@
+---
+title: WeChat Pay
+description: Focused one-time WeChat payments across web, Expo, and Node.js.
+---
+
+# WeChat Pay
+
+A focused TypeScript workspace for App, H5, JSAPI, and Native QR one-time payments.
+
+::: tip Safe runtime boundaries
+Merchant keys never enter a client package. Order creation, signatures, webhook verification, and fulfilment remain on your trusted backend.
+:::
+
+## Packages
+
+| Package | Responsibility |
+| --- | --- |
+| `@chinafast/core-wechat-pay` | Shared contracts, channel policy, errors, and backend HTTP client |
+| `@chinafast/web-wechat-pay` | H5 redirects, Official Account JSAPI, desktop Native QR, and React |
+| `@chinafast/expo-wechat-pay` | Native WeChat App Pay, Expo config plugin, and React |
+| `@chinafast/server-wechat-pay` | API v3 signing, orders, queries, close, refunds, and verified webhooks |
+
+## Supported channels
+
+| Runtime | Channel |
+| --- | --- |
+| WeChat browser | JSAPI |
+| Other mobile browser | H5 |
+| Desktop browser | Native QR |
+| Expo development or production build | App Pay |
+
+Start with the [installation and flow guide](/wechat-pay/getting-started), then select [Web](/wechat-pay/web) or [Expo](/wechat-pay/expo).

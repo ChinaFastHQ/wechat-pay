@@ -1,0 +1,48 @@
+---
+title: Server and webhooks
+description: Sign WeChat Pay API v3 requests and verify payment notifications.
+---
+
+# Server and webhooks
+
+`@chinafast/server-wechat-pay` creates App, H5, JSAPI, and Native QR orders; queries and closes orders; submits refunds; and verifies API v3 webhooks.
+
+## Live configuration
+
+```ts
+import { createWeChatPayServer } from "@chinafast/server-wechat-pay";
+
+const wechatPay = createWeChatPayServer({
+  mode: "live",
+  credentials: {
+    appId: process.env.WECHAT_APP_ID!,
+    merchantId: process.env.WECHAT_MERCHANT_ID!,
+    apiV3Key: process.env.WECHAT_API_V3_KEY!,
+    privateKey: process.env.WECHAT_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+    certificateSerialNo: process.env.WECHAT_CERTIFICATE_SERIAL_NO!,
+    platformCertificates: {
+      [process.env.WECHAT_PLATFORM_SERIAL!]:
+        process.env.WECHAT_PLATFORM_CERTIFICATE!.replace(/\\n/g, "\n"),
+    },
+    notifyUrl: "https://api.example.com/wechat-pay/webhook",
+  },
+});
+```
+
+## Webhook handling
+
+Pass the exact raw HTTP request body and WeChat signature headers to `verifyWebhook`. Parsing JSON and serializing it again changes the signed bytes and invalidates verification.
+
+Only fulfil after all of these checks succeed:
+
+- The webhook signature matches a trusted, current WeChat platform certificate.
+- The encrypted resource decrypts and parses successfully.
+- The merchant ID and app ID match the expected account.
+- The order ID exists and its amount and currency match your server-side record.
+- The same event or order has not already been fulfilled.
+
+Use an idempotent database transaction to record payment and grant the purchased product together. Webhooks can be retried, duplicated, delayed, or arrive out of order.
+
+## Client status is not payment proof
+
+Native callbacks, browser redirects, and JSAPI results are useful for interface state only. Your server should use a verified webhook or an authenticated order query as the source of truth.

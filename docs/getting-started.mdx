@@ -1,0 +1,47 @@
+---
+title: Getting started
+description: Install WeChat Pay and understand its authoritative server flow.
+---
+
+# Getting started
+
+## Install by runtime
+
+::: code-group
+
+```bash [Web]
+pnpm add @chinafast/web-wechat-pay
+```
+
+```bash [Expo]
+pnpm add @chinafast/expo-wechat-pay
+```
+
+```bash [Server]
+pnpm add @chinafast/server-wechat-pay
+```
+
+:::
+
+## Payment flow
+
+1. The web or Expo package selects the appropriate one-time payment channel.
+2. The core client asks your backend to create an order.
+3. The server package signs a WeChat Pay API v3 request with merchant credentials.
+4. The client launches WeChat, redirects to H5, invokes JSAPI, or renders a Native Pay QR code.
+5. Your backend verifies the signed webhook or queries the order before fulfilment.
+
+## Requirements
+
+- Node.js 20 or newer for the backend.
+- A WeChat Pay merchant account for live mode.
+- A WeChat Open Platform mobile app for Expo App Pay.
+- Registered H5 and JSAPI domains for those browser channels.
+- An Official Account `openId` flow for JSAPI.
+- An Expo development build or standalone app for native App Pay.
+
+::: warning Amounts and products
+Amounts are integer fen. For known products, configure the price on the server and send only a product ID from the client. Never trust a client-supplied price.
+:::
+
+Mock mode needs no merchant credentials and is the right first integration target.

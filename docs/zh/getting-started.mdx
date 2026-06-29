@@ -1,0 +1,40 @@
+---
+title: 快速开始
+description: 安装微信支付并理解以服务端为准的支付流程。
+---
+
+# 快速开始
+
+## 按运行环境安装
+
+::: code-group
+```bash [Web]
+pnpm add @chinafast/web-wechat-pay
+```
+```bash [Expo]
+pnpm add @chinafast/expo-wechat-pay
+```
+```bash [服务端]
+pnpm add @chinafast/server-wechat-pay
+```
+:::
+
+## 支付流程
+
+1. Web 或 Expo 软件包选择合适的一次性支付渠道。
+2. 核心客户端请求后端创建订单。
+3. 服务端软件包使用商户凭据签署微信支付 API v3 请求。
+4. 客户端拉起微信、跳转 H5、调用 JSAPI 或显示 Native 支付二维码。
+5. 后端验证签名回调或查询订单，确认后才履约。
+
+## 环境要求
+
+- 后端使用 Node.js 20 或更高版本。
+- 实时模式需要微信支付商户号。
+- Expo App 支付需要微信开放平台移动应用。
+- H5 和 JSAPI 需要已登记的域名；JSAPI 还需要公众号 `openId` 流程。
+- 原生支付需要 Expo 开发构建或独立应用。
+
+::: warning 金额与商品
+金额使用整数分。固定商品的价格必须配置在服务端，客户端只发送商品 ID，绝不能信任客户端传入的价格。
+:::

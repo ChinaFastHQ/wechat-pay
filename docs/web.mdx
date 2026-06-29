@@ -1,0 +1,50 @@
+---
+title: Web
+description: H5, JSAPI, and Native QR payments for browser applications.
+---
+
+# Web
+
+`@chinafast/web-wechat-pay` automatically chooses JSAPI inside WeChat, H5 in other mobile browsers, and Native QR on desktop.
+
+## Create a payment
+
+```ts
+import { createWebWeChatPay } from "@chinafast/web-wechat-pay";
+
+const payments = createWebWeChatPay({
+  apiBaseUrl: "https://api.example.com",
+});
+
+const result = await payments.pay({ productId: "coffee", openId });
+```
+
+For a Native QR order, `result.qr` is a pre-rendered data URL that can be used directly as an image source. H5 and JSAPI launches do not return a QR image.
+
+## Watch authoritative status
+
+```ts
+const controller = payments.watch(result.orderId, (status) => {
+  if (status.status === "paid") {
+    showConfirmation();
+  }
+});
+
+controller.stop();
+```
+
+Polling stops automatically when an order becomes paid, closed, or failed.
+
+## React
+
+```tsx
+import { useWeChatPay } from "@chinafast/web-wechat-pay/react";
+
+const { pay, loading, result, error, qr, status } = useWeChatPay(payments);
+```
+
+The hook starts status polling after a launch. `qr` is present only for Native QR orders, and `status` is the latest response from your server.
+
+::: warning
+A browser callback only describes the client launch. It is not proof of payment. Grant the product only from authoritative server state.
+:::

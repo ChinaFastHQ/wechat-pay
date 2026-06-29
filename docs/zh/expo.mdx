@@ -1,0 +1,43 @@
+---
+title: Expo
+description: Expo 开发构建与生产应用中的原生 App 支付。
+---
+
+# Expo
+
+`@chinafast/expo-wechat-pay` 提供原生微信 App 支付、Expo 配置插件和可选的 React 绑定。
+
+## 配置原生项目
+
+```ts
+export default {
+  expo: {
+    plugins: [["@chinafast/expo-wechat-pay/plugin", {
+      appId: process.env.EXPO_PUBLIC_WECHAT_APP_ID,
+      universalLink: "https://example.com/app/",
+    }]],
+  },
+};
+```
+
+添加或更改插件配置后需要重新构建原生应用。
+
+## 创建支付
+
+```ts
+import { createExpoWeChatPay } from "@chinafast/expo-wechat-pay";
+
+const payments = createExpoWeChatPay({
+  appId: process.env.EXPO_PUBLIC_WECHAT_APP_ID!,
+  universalLink: "https://example.com/app/",
+  apiBaseUrl: "https://api.example.com",
+});
+
+const result = await payments.pay({ productId: "coffee" });
+```
+
+`result.status` 只描述原生 SDK 回调；从后端轮询得到的 `status` 才应控制支付确认界面。
+
+::: warning Expo Go
+Expo Go 无法加载微信原生 SDK，请使用开发构建或独立应用。
+:::

@@ -1,0 +1,44 @@
+---
+title: 服务端与回调通知
+description: 签署微信支付 API v3 请求并验证支付通知。
+---
+
+# 服务端与回调通知
+
+`@chinafast/server-wechat-pay` 可以创建 App、H5、JSAPI 和 Native 订单，查询或关闭订单，发起退款并验证 API v3 回调。
+
+## 实时模式配置
+
+```ts
+import { createWeChatPayServer } from "@chinafast/server-wechat-pay";
+
+const wechatPay = createWeChatPayServer({
+  mode: "live",
+  credentials: {
+    appId: process.env.WECHAT_APP_ID!,
+    merchantId: process.env.WECHAT_MERCHANT_ID!,
+    apiV3Key: process.env.WECHAT_API_V3_KEY!,
+    privateKey: process.env.WECHAT_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+    certificateSerialNo: process.env.WECHAT_CERTIFICATE_SERIAL_NO!,
+    platformCertificates: {
+      [process.env.WECHAT_PLATFORM_SERIAL!]:
+        process.env.WECHAT_PLATFORM_CERTIFICATE!.replace(/\\n/g, "\n"),
+    },
+    notifyUrl: "https://api.example.com/wechat-pay/webhook",
+  },
+});
+```
+
+## 处理回调
+
+必须把 HTTP 原始请求体和微信签名请求头传给 `verifyWebhook`。先解析 JSON 再序列化会改变已签名的字节，导致验证失败。
+
+满足以下条件后才可履约：
+
+- 回调签名匹配可信且有效的微信平台证书。
+- 加密资源成功解密并解析。
+- 商户号和 App ID 与预期账户一致。
+- 订单存在，且金额、币种与服务端记录一致。
+- 同一事件或订单尚未履约。
+
+应在同一个幂等数据库事务中记录支付并交付商品。回调可能重试、重复、延迟或乱序到达。
